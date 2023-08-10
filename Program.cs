@@ -8,9 +8,11 @@ var GetWord = async (string word) => {
     HttpClient httpClient = new()
     {
         BaseAddress = new Uri($"https://ru.wiktionary.org"),
+        
     };
-    var result = await httpClient.GetAsync($"/wiki/{word}");
-    return await result.Content.ReadAsStringAsync();
+    var response = await httpClient.GetAsync($"/wiki/{word}");
+    response.EnsureSuccessStatusCode();
+    return await response.Content.ReadAsStringAsync();
 };
 
 app.MapGet("/{word:alpha}", async (string word) => {
@@ -19,3 +21,8 @@ app.MapGet("/{word:alpha}", async (string word) => {
 });
 
 app.Run();
+
+class Word
+{
+    
+}
